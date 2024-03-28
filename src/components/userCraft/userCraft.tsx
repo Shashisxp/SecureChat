@@ -2,9 +2,11 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
-import { Button } from "..//../components/index";   
+import { Button } from "..//../components/index";
 
-import "./userCraft.css"
+import "./userCraft.css";
+
+import { connectWallet } from "..//..//../utils/apiFeature";
 
 interface AccountDetails {
   name: string;
@@ -20,16 +22,26 @@ interface UserCraftProps {
   icon1: string;
   icon2: string;
   buttonText: string;
-  onButtonClick : (accountDetails: AccountDetails) => Promise<void>;
-
+  onButtonClick: (accountDetails: AccountDetails) => Promise<void>;
 }
 
-const UserCraft = ({image, title, mainTitle, icon1, icon2, buttonText, onButtonClick, placeholder1, placeholder2}: UserCraftProps) => {
+const UserCraft = ({
+  image,
+  title,
+  mainTitle,
+  icon1,
+  icon2,
+  buttonText,
+  onButtonClick,
+  placeholder1,
+  placeholder2,
+}: UserCraftProps) => {
   const [name, setName] = useState("");
   const [accountAddress, setAccountAddress] = useState("");
 
-  const { account, createAccount, error, setError } =
+  const { account, createAccount, error, setError, setAccount } =
     useContext(ChatAppContext);
+
   const navigate = useNavigate();
 
   return (
@@ -66,7 +78,10 @@ const UserCraft = ({image, title, mainTitle, icon1, icon2, buttonText, onButtonC
           </div>
 
           <div className="auth-btn-wrapper">
-          <Button text={buttonText} onClick={() => onButtonClick({name, accountAddress})} />
+            <Button
+              text={buttonText}
+              onClick={() => onButtonClick({ name, accountAddress })}
+            />
 
             <Button
               text="CANCEL"

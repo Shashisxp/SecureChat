@@ -31,6 +31,7 @@ interface ChatAppContextType {
   setAccount: React.Dispatch<React.SetStateAction<string>>;
   username: string;
   friendList: string[];
+  setFriendList: React.Dispatch<React.SetStateAction<string[]>>;
   friendMsg: string[];
   loading: boolean;
   userLists: string[];
@@ -50,7 +51,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
   //USE STATE
   const [account, setAccount] = useState("");
   const [username, setUsername] = useState("");
-  const [friendList, setFriendList] = useState([]);
+  const [friendList, setFriendList] = useState<string[]>([]);
   const [friendMsg, setFriendMsg] = useState([]);
   const [loading, setLoading] = useState(false);
   const [userLists, setUserLists] = useState([]);
@@ -109,11 +110,16 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   // this use effect is for checking the wallet connection and updating the account state
+  //! jaruri useEffect hain for the account changes
   useEffect(() => {
     const handleAccountsChanged = (accounts: string[]) => {
       // When the accounts array is empty, it means the user has disconnected their wallet
       if (accounts.length === 0) {
         setAccount("");
+      } else {
+        // When the accounts array is not empty, it means the user has switched accounts
+        // So we update the account state with the new account
+        setAccount(accounts[0]);
       }
     };
 
@@ -130,7 +136,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         );
       }
     };
-  }, []);
+  }, [account, setAccount]);
   // read message
   const readMessage = async (friendAddress: string) => {
     try {
@@ -266,6 +272,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         setAccount,
         username,
         friendList,
+        setFriendList,
         friendMsg,
         loading,
         userLists,
