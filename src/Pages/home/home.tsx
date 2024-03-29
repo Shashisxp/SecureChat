@@ -52,7 +52,7 @@ const Home = () => {
         </h1>
       ) : (
         <UserCraft
-          image="auth-1.svg"
+          image="hero-0.svg"
           title="Discover and chat with friends easily."
           mainTitle=""
           placeholder1="Enter Your Friend's Name"
