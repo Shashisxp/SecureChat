@@ -4,7 +4,7 @@
 
 .all-chat-wrapper{
       display: flex;
-      flex-direction: column;
+      /* flex-direction: ; */
       height : 75vh;
       margin-left : 10rem;
       margin-right : 10rem;

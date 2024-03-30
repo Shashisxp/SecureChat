@@ -5,7 +5,7 @@ import { UserCraft } from "..//..//components/index";
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
 import "./home.css";
-import { Nav, Friend } from "..//..//components/index";
+import { Nav, Friend, Chat } from "..//..//components/index";
 // import { ChatAppContext } from '../../../context/ChatAppContext';
 
 const Home = () => {
@@ -19,10 +19,6 @@ const Home = () => {
 
   const { addFriends, friendList } = context;
 
-  if (friendList && friendList.length > 0) {
-    // setShowAddFriend(false);
-    console.log(friendList[0][0] + " " + friendList[0][1]);
-  }
 
   return (
     <div className="home-wrapper">
@@ -30,7 +26,7 @@ const Home = () => {
 
       {friendList && friendList.length > 0 ? (
 
-        <div className="all-chat-wrapper"> <Friend /></div>
+        <div className="all-chat-wrapper"> <Friend /> <Chat/> </div>
        
       ) : (
         <UserCraft

@@ -21,21 +21,27 @@ const Friend = () => {
     throw new Error("Friend must be used within a ChatAppContextProvider");
   }
 
-  const { friendList, setFriendList, currentUsername, setCurrentUsername, currentUserAddress, setCurrentUserAddress } = context;
+  const { friendList, setFriendList, currentUsername, setCurrentUsername, currentUserAddress, setCurrentUserAddress,imageIndex,
+    setImageIndex, } = context;
 
   useEffect(() => {
     const fetchData = async () => {
       const contract = await getContractInstance();
-
+  
       const friendLists = await contract.getMyFriendList();
       if (friendLists !== null) {
         setFriendList(friendLists);
+  
+        setCurrentUsername(friendLists[0][0]); // Use friendLists instead of friendList
+        setCurrentUserAddress(friendLists[0][1]); // Use friendLists instead of friendList
       }
     };
+  
     fetchData();
-  }, [friendList, setFriendList]);
+  }, []); // Remove friendList from the dependency array
 
-  const handleClickedFriend = (event: React.MouseEvent<HTMLDivElement>, friend: Friend) => {
+  const handleClickedFriend = (event: React.MouseEvent<HTMLDivElement>, friend: Friend, index) => {
+    setImageIndex(index+1);
     setActiveFriend(friend.name)
     setCurrentUsername(friend.name);
     setCurrentUserAddress(friend.friendAddress);
@@ -44,7 +50,7 @@ const Friend = () => {
   return (
     <div className="friends-wrapper">
       {friendList.map((friend, index) => (
-      <div className={`friend ${activeFriend === friend.name ? 'active' : ''}`} key={index} onClick={ (event) => handleClickedFriend(event , friend)}>
+      <div className={`friend ${activeFriend === friend.name ? 'active' : ''}`} key={index} onClick={ (event) => handleClickedFriend(event , friend , index)}>
       <div
           className="image-wrapper"
             style={{

@@ -42,6 +42,8 @@ interface ChatAppContextType {
   setCurrentUsername : React.Dispatch<React.SetStateAction<string>>;
   currentUserAddress: string;
   setCurrentUserAddress: React.Dispatch<React.SetStateAction<string>>;
+  imageIndex : number;
+  setImageIndex : React.Dispatch<React.SetStateAction<number>>;
 
   // getUSERNAME: () => Promise<void>;
 }
@@ -60,7 +62,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [userLists, setUserLists] = useState([]);
   const [error, setError] = useState("");
-
+  const [imageIndex , setImageIndex] = useState(1);
   //Chat user data
 
   const [currentUsername, setCurrentUsername] = useState("");
@@ -287,6 +289,8 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         setCurrentUsername,
         currentUserAddress,
         setCurrentUserAddress,
+        imageIndex,
+        setImageIndex,
         // getUSERNAME,
       }}
     >

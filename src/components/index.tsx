@@ -7,5 +7,6 @@ import Modal from "./modal/modal";
 import UserCard from "./userCard/userCard"; 
 import Button from "./button/button";
 import UserCraft from "./userCraft/userCraft";
+import Chat from "./chat/chat";
 
-export { Nav, Error, Friend, Filter, Loader, Modal, UserCard, Button, UserCraft }; 
+export { Nav, Error, Friend, Filter, Loader, Modal, UserCard, Button, UserCraft, Chat}; 
