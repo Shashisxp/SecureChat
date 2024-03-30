@@ -43,6 +43,7 @@
   --primary: #005eb8;
   --secondary: #1e1e1e;
   --accent: #ffed00;
+  --visited : #d8cb3e;
   background-color: var(--background);
   color: var(--text);
 

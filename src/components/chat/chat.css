@@ -34,5 +34,6 @@
 
 .chat-header-info h3{
   font-size : var(--font-size-xhuge);
+  color : var(--visited );
   font-weight : 600;
 }

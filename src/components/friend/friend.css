@@ -41,7 +41,7 @@
 .friend.active {
   color : var(--background);
   font-weight: 900;
-  background-color : var(--accent);
+  background-color : var(--visited );
 }
 
 

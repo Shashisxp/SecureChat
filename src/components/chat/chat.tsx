@@ -50,7 +50,7 @@ const Chat = () => {
           </div>
         <div className="chat-header-info">
           <h3>{currentUsername}</h3>
-          <p>{currentUserAddress}</p>
+          <p>{currentUserAddress.slice(0,18)+ "..."}</p>
         </div>
       </div>
       {/* <div className="chat-body">

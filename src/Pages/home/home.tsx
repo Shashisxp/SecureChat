@@ -1,11 +1,13 @@
 // import { useContext } from 'react';
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserCraft } from "..//..//components/index";
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
 import "./home.css";
 import { Nav, Friend, Chat } from "..//..//components/index";
+
+import { getContractInstance } from "..//..//..//utils/apiFeature";
 // import { ChatAppContext } from '../../../context/ChatAppContext';
 
 const Home = () => {
@@ -17,8 +19,20 @@ const Home = () => {
     throw new Error("Friend must be used within a ChatAppContextProvider");
   }
 
-  const { addFriends, friendList } = context;
+  const { addFriends, friendList, setFriendList } = context;
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const contract = await getContractInstance();
+  
+      const friendLists = await contract.getMyFriendList();
+      if (friendLists !== null) {
+        setFriendList(friendLists);
+      }
+    };
+  
+    fetchData();
+  }, [friendList, setFriendList]); // Remove friendList from the dependency array
 
   return (
     <div className="home-wrapper">
