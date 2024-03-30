@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "hardhat-vite": "^1.0.0",
+    "perfect-scrollbar": "^1.5.5",
     "react": "^18.2.0",
     "react-awesome-reveal": "^4.2.8",
     "react-dom": "^18.2.0",

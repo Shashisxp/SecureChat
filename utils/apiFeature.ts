@@ -72,24 +72,7 @@ export const connectWallet = async (): Promise<Wallet | null> => {
   }
 };
 
-// Function to get a contract instance
 
-// dont try to export this below function it is just an internal function you know
-//! nah nah export it
-// export const getContractInstance = (): ethers.Contract => {
-//   // console.log("ChatAppAddress:", ChatAppAddress);
-//   // console.log("ChatAppAbi:", ChatAppAbi);
-//   // console.log("Provider:", provider);
-
-//   try {
-//     const contract = new ethers.Contract(ChatAppAddress, ChatAppAbi, provider);
-//     // console.log("Contract:", contract);
-//     return contract;
-//   } catch (error) {
-//     console.error("Failed to create contract instance:", error);
-//     throw error;
-//   }
-// };
 
 export const convertTime = (time: any) => {
   const newTime = new Date(time.toNumber());

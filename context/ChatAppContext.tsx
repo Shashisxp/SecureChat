@@ -33,12 +33,16 @@ interface ChatAppContextType {
   friendList: string[];
   setFriendList: React.Dispatch<React.SetStateAction<string[]>>;
   friendMsg: string[];
+  setFriendMsg: React.Dispatch<React.SetStateAction<never[]>>;
   loading: boolean;
   userLists: string[];
   error: string;
   setError: React.Dispatch<React.SetStateAction<string>>; // Add this line
   currentUsername: string;
+  setCurrentUsername : React.Dispatch<React.SetStateAction<string>>;
   currentUserAddress: string;
+  setCurrentUserAddress: React.Dispatch<React.SetStateAction<string>>;
+
   // getUSERNAME: () => Promise<void>;
 }
 
@@ -274,12 +278,15 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         friendList,
         setFriendList,
         friendMsg,
+        setFriendMsg,
         loading,
         userLists,
         error,
         setError,
         currentUsername,
+        setCurrentUsername,
         currentUserAddress,
+        setCurrentUserAddress,
         // getUSERNAME,
       }}
     >

@@ -1,0 +1,58 @@
+.friends-wrapper{
+  display: block; /* Changed from flex to block */
+  box-shadow: 0 0 10px 5px var(--background);
+  width :35%;
+  margin :2rem;
+  max-height:auto;
+  border-radius: 30px;
+  padding:1rem;
+  background-color: var(--secondary);
+  overflow: auto !important; /* Changed from scroll to auto */
+}
+
+.friend{
+  margin: 1.5rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: var(--background);
+  height : 65px;
+  display : flex;
+  align-items: center;
+  transition: 0.5s ease-in-out;
+  cursor : pointer;
+  width: 80%;
+  overflow: hidden;
+}
+.friend:hover{
+  transition: 0.5s ease-in-out;
+  /* border : 0.2px solid var(--accent); */
+  background-color: var(--secondary);
+}
+
+.friend-name{
+  margin: 1rem;
+  font-family : var(--primary-font);
+}
+
+.image-wrapper{
+  margin-left : 1rem;
+}
+
+.friend.active {
+  color : var(--background);
+  font-weight: 900;
+  background-color : var(--accent);
+}
+
+
+/* 
+.friend-address{
+  margin: 1rem;
+  font-family : var(--primary-font);
+} */
+
+/* .friend-address{
+  margin-left : 1rem;
+  font-family : var(--primary-font);
+
+} */
