@@ -19,29 +19,53 @@ const Home = () => {
     throw new Error("Friend must be used within a ChatAppContextProvider");
   }
 
-  const { addFriends, friendList, setFriendList } = context;
+  const {
+    addFriends,
+    friendList,
+    setFriendList,
+    account,
+    setAccount,
+    friendMsg,
+    currentUserAddress,
+    currentUsername,
+    username,
+  } = context;
 
   useEffect(() => {
     const fetchData = async () => {
       const contract = await getContractInstance();
-  
+
       const friendLists = await contract.getMyFriendList();
       if (friendLists !== null) {
         setFriendList(friendLists);
+      } else {
+        setFriendList([]);
       }
     };
-  
+
     fetchData();
-  }, [friendList, setFriendList]); // Remove friendList from the dependency array
+  }, [
+    friendList,
+    setFriendList,
+    friendMsg,
+    currentUserAddress,
+    account,
+    setAccount,
+  ]); // Remove friendList from the dependency array
+
+  // useEffect(() => {
+  //   setFriendList([]);
+  // }, [account, setAccount]);
 
   return (
     <div className="home-wrapper">
       <Nav />
 
       {friendList && friendList.length > 0 ? (
-
-        <div className="all-chat-wrapper"> <Friend /> <Chat/> </div>
-       
+        <div className="all-chat-wrapper">
+          {" "}
+          <Friend /> <Chat />{" "}
+        </div>
       ) : (
         <UserCraft
           image="hero-0.svg"
