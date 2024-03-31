@@ -26,7 +26,7 @@ const Nav = () => {
     setAccount(wallet.address);
   }, [connectWallet, setAccount]);
 
-  console.log("kaka", username);
+  // console.log("kaka", username);
 
   return (
     <>

@@ -143,6 +143,8 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
       }
     };
   }, [account, setAccount]);
+
+
   // read message
   const readMessage = async (friendAddress: string) => {
     try {
@@ -242,7 +244,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false);
       // window.location.reload();
     } catch (error) {
-      document.body.style.overflowY = "hidden";
+      // document.body.style.overflowY = "hidden";
       setError("Error while sending message reload the page and try again");
     }
   };

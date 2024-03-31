@@ -117,10 +117,7 @@ contract ChatApp {
 
     // get the chat
 
-    function _getChat(
-        address pubkey1,
-        address pubkey2
-    ) internal pure returns (bytes32) {
+    function _getChat( address pubkey1,address pubkey2) internal pure returns (bytes32) {
         if (pubkey1 < pubkey2) {
             return keccak256(abi.encodePacked(pubkey1, pubkey2));
         } else return keccak256(abi.encodePacked(pubkey2, pubkey1));
@@ -147,9 +144,7 @@ contract ChatApp {
 
     //read messages
 
-    function readMessage(
-        address friend_key
-    ) external view returns (message[] memory) {
+    function readMessage(address friend_key) external view returns (message[] memory) {
         require(checkUserExist(msg.sender), "Create an account first");
         require(checkUserExist(friend_key), "User is not registered");
         require(
