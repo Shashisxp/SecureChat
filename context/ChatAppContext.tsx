@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, ReactNode } from "react";
+import React, { useState, useEffect, createContext, ReactNode , useRef} from "react";
 import { useNavigate } from "react-router-dom";
 
 // internal imports
@@ -44,6 +44,8 @@ interface ChatAppContextType {
   setCurrentUserAddress: React.Dispatch<React.SetStateAction<string>>;
   imageIndex : number;
   setImageIndex : React.Dispatch<React.SetStateAction<number>>;
+  lastMessageRef: React.MutableRefObject<null>;
+  scrollBack: () => void;
 
   // getUSERNAME: () => Promise<void>;
 }
@@ -115,10 +117,20 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
     fetchData();
   }, []);
 
+  
+
+  //! this shits here check if the user is registred or not if he or she is then and then only we will ask them for there names 
+  const isAccountRegistered = async (account: string) => {          
+
+    const contract = await getContractInstance();
+    const registered = await contract.checkUserExist(account);
+    return registered;
+  };
+
   // this use effect is for checking the wallet connection and updating the account state
   //! jaruri useEffect hain for the account changes
   useEffect(() => {
-    const handleAccountsChanged = (accounts: string[]) => {
+    const handleAccountsChanged = async (accounts: string[]) => {
       // When the accounts array is empty, it means the user has disconnected their wallet
       if (accounts.length === 0) {
         setAccount("");
@@ -126,7 +138,13 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         // When the accounts array is not empty, it means the user has switched accounts
         // So we update the account state with the new account
         setAccount(accounts[0]);
-        getUSERNAME();
+
+        if (await isAccountRegistered(accounts[0])) {
+          getUSERNAME();
+          // readMessage(accounts[0]);
+          // readUser(accounts[0]);
+          
+        }
       }
     };
 
@@ -145,6 +163,14 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [account, setAccount]);
 
+
+  const lastMessageRef = useRef(null);
+
+  const scrollBack = () => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "auto" });
+    }
+  }
 
   // read message
   const readMessage = async (friendAddress: string) => {
@@ -294,6 +320,8 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         setCurrentUserAddress,
         imageIndex,
         setImageIndex,
+        lastMessageRef,
+        scrollBack,
         // getUSERNAME,
       }}
     >

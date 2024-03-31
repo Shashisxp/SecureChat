@@ -127,10 +127,10 @@ contract ChatApp {
     function sendMessage(address receiver, string calldata _msg) external {
         require(checkUserExist(msg.sender), "Create an account first");
         require(checkUserExist(receiver), "User is not registered");
-        require(
-            _checkAlreadyFriends(msg.sender, receiver),
-            "You are not friends with this user"
-        );
+        // require(
+        //     _checkAlreadyFriends(msg.sender, receiver),
+        //     "You are not friends with this user"
+        // );
         require(
             msg.sender != receiver,
             "Users cannot send message to themselves"
@@ -147,10 +147,10 @@ contract ChatApp {
     function readMessage(address friend_key) external view returns (message[] memory) {
         require(checkUserExist(msg.sender), "Create an account first");
         require(checkUserExist(friend_key), "User is not registered");
-        require(
-            _checkAlreadyFriends(msg.sender, friend_key),
-            "You are not friends with this user"
-        );
+        // require(
+        //     _checkAlreadyFriends(msg.sender, friend_key),
+        //     "You are not friends with this user"
+        // );
         bytes32 chatId = _getChat(msg.sender, friend_key);
         return messages[chatId];
     }

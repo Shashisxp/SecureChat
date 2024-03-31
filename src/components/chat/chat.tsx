@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
@@ -32,6 +32,11 @@ const Chat = () => {
     Error,
     setError,
     setImageIndex,
+    lastMessageRef,
+    scrollBack,
+    account,
+    setAccount,
+    username,
   } = context;
 
   const sendMsg = async (friendAddress: string, message: string) => {
@@ -45,7 +50,6 @@ const Chat = () => {
       // setLoading(true);
       await addMessage.wait();
       setTimeout(scrollBack, 1000); // Call scrollBack after 3 seconds
-   
     } catch (error) {
       setError("Error while sending message reload the page and try again");
     }
@@ -55,7 +59,6 @@ const Chat = () => {
     const message = msg; // the message we need to send to our solidity backend
     sendMsg(currentUserAddress, message);
     setMsg("");
-    
   };
 
   useEffect(() => {
@@ -65,27 +68,25 @@ const Chat = () => {
         const contract = await getContractInstance();
 
         const read = await contract.readMessage(friendAddress);
-        
 
         if (read !== null) {
           setFriendMsg(read);
         }
         console.log("the real message STATE", friendMsg);
       } catch (error) {
-        // setError("Currently you have no messages");
+        // setError("fuck you little nigga");
       }
     };
 
-    readMessage(currentUserAddress); // Call the function with the appropriate argument
-  }, [friendMsg, currentUserAddress]); // Remove the extra closing brace and parenthesis
-
-  const lastMessageRef = useRef(null);
-
-  const scrollBack = () => {
-    if (lastMessageRef.current) {
-      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }
+    readMessage(currentUserAddress);
+  }, [
+    friendMsg,
+    currentUserAddress,
+    account,
+    setAccount,
+    currentUsername,
+    username,
+  ]);
 
   // setLoading(false);
 
