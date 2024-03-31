@@ -126,6 +126,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         // When the accounts array is not empty, it means the user has switched accounts
         // So we update the account state with the new account
         setAccount(accounts[0]);
+        getUSERNAME();
       }
     };
 
@@ -184,21 +185,21 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  // const getUSERNAME = async () => {
-  //   try {
-  //     const contract = await getContractInstance();
-  //     const connectAccount = await connectWallet();
-  //     console.log(` public key : ${connectAccount?.address}`);
+  const getUSERNAME = async () => {
+    try {
+      const contract = await getContractInstance();
+      const connectAccount = await connectWallet();
+      console.log(` public key : ${connectAccount?.address}`);
 
-  //     const userName = await contract.getUsername(connectAccount?.address);
-  //     if (userName !== null) {
-  //       setUsername(userName);
-  //     }
-  //     console.log(` hello ${userName}  how are you doing `);
-  //   } catch (error) {
-  //     setError(error.reason || error.message || error.toString());
-  //   }
-  // };
+      const userName = await contract.getUsername(connectAccount?.address);
+      if (userName !== null) {
+        setUsername(userName);
+      }
+      // console.log(` hello ${userName}  how are you doing `);
+    } catch (error) {
+      setError(error.reason || error.message || error.toString());
+    }
+  };
   // add your Friends
 
   // Inside your component

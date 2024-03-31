@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
@@ -44,21 +44,9 @@ const Chat = () => {
 
       // setLoading(true);
       await addMessage.wait();
-      // console.log("Message sent to ", friendAddress, "Message: ", message);
-
-      // // reading the message
-      // const read = await contract.readMessage(friendAddress);
-
-      // if (read !== null) {
-      //   setFriendMsg(read);
-      // }
-
-      // console.log("the real message " ,read);
-      // console.log("the real message STATE" ,friendMsg);
-      // setLoading(false);
-      // window.location.reload();
+      setTimeout(scrollBack, 1000); // Call scrollBack after 3 seconds
+   
     } catch (error) {
-      // document.body.style.overflowY = "hidden";
       setError("Error while sending message reload the page and try again");
     }
   };
@@ -67,6 +55,7 @@ const Chat = () => {
     const message = msg; // the message we need to send to our solidity backend
     sendMsg(currentUserAddress, message);
     setMsg("");
+    
   };
 
   useEffect(() => {
@@ -76,6 +65,7 @@ const Chat = () => {
         const contract = await getContractInstance();
 
         const read = await contract.readMessage(friendAddress);
+        
 
         if (read !== null) {
           setFriendMsg(read);
@@ -89,12 +79,21 @@ const Chat = () => {
     readMessage(currentUserAddress); // Call the function with the appropriate argument
   }, [friendMsg, currentUserAddress]); // Remove the extra closing brace and parenthesis
 
+  const lastMessageRef = useRef(null);
+
+  const scrollBack = () => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   // setLoading(false);
 
   return (
     <div className="chat-wrapper">
       <div className="chat-header">
         <div
+          className="chat-header-pic"
           style={{
             borderRadius: "50%",
             overflow: "hidden",
@@ -114,13 +113,40 @@ const Chat = () => {
           <p>{currentUserAddress.slice(0, 18) + "..."}</p>
         </div>
       </div>
-      <div className="chat-body">
+      <div className="chat-body-wrapper">
         {friendMsg.map((message, index) => (
-          <div key={index}>
-            <p>{message[0]}</p> {/* The message text */}
-            <p>{message[1]}</p> {/* The sender's public address */}
-            <p>{new Date(Number(message[2])).toString()}</p>{" "}
-            {/* The time, converted to a Date object */}
+          <div className="chat-body">
+            <div
+              ref={lastMessageRef}
+              key={index}
+              className={
+                message[1] === currentUserAddress
+                  ? "chat-msg left"
+                  : "chat-msg right"
+              }
+            >
+              {" "}
+              <p className="msg">{message[0]}</p> {/* The message text */}
+              <p className="date">
+                {new Date(Number(message[2]) * 1000).toLocaleDateString(
+                  undefined,
+                  {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  }
+                ) +
+                  " " +
+                  new Date(Number(message[2]) * 1000).toLocaleTimeString(
+                    undefined,
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    }
+                  )}
+              </p>
+            </div>
           </div>
         ))}
       </div>
