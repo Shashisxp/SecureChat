@@ -1,12 +1,10 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
 import { Button } from "..//../components/index";
 
 import "./userCraft.css";
-
-import { connectWallet } from "..//..//../utils/apiFeature";
 
 interface AccountDetails {
   name: string;
@@ -39,8 +37,13 @@ const UserCraft = ({
   const [name, setName] = useState("");
   const [accountAddress, setAccountAddress] = useState("");
 
-  const { account, createAccount, error, setError, setAccount } =
-    useContext(ChatAppContext);
+  const context = useContext(ChatAppContext);
+
+  if (!context) {
+    throw new Error("UserCraft must be used within a ChatAppContextProvider");
+  }
+
+  const { account } = context;
 
   const navigate = useNavigate();
 

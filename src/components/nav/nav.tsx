@@ -5,7 +5,7 @@ import { useContext, useState, useCallback } from "react";
 
 //internal imports
 import "./nav.css";
-import { Modal, Error, Button } from "../index"; //? some components nothing more then that
+import { Button } from "../index"; //? some components nothing more then that
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
@@ -13,17 +13,23 @@ import { ChatAppContext } from "../../../context/ChatAppContext";
 const Nav = () => {
   const [showMobMenu, setShowMobMenu] = useState(false);
   // const [openModal, setOpenModal] = useState(false);
+  const context = useContext(ChatAppContext);
+
+  if (!context) {
+    throw new Error("Nav must be used within a ChatAppContextProvider");
+  }
 
   //! consuming the context
-  const { connectWallet, account, setAccount, username } =
-    useContext(ChatAppContext);
+  const { connectWallet, account, setAccount, username } = context;
 
   const navigate = useNavigate();
 
   // Define the onClick handler here, using useCallback
   const connectWalletOnClick = useCallback(async () => {
     const wallet = await connectWallet();
-    setAccount(wallet.address);
+    if (wallet !== null) {
+      setAccount(wallet.address);
+    }
   }, [connectWallet, setAccount]);
 
   // console.log("kaka", username);

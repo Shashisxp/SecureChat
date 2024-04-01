@@ -2,9 +2,6 @@ import { useState, useEffect, useContext } from "react";
 
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
-//! convert time utility
-import { convertTime } from "..//..//../utils/apiFeature";
-
 import "./chat.css";
 
 //! some Uitlities below
@@ -23,15 +20,11 @@ const Chat = () => {
 
   const {
     currentUsername,
-    setCurrentUsername,
     currentUserAddress,
-    setCurrentUserAddress,
     friendMsg,
     setFriendMsg,
     imageIndex,
-    Error,
     setError,
-    setImageIndex,
     lastMessageRef,
     scrollBack,
     account,
@@ -86,6 +79,7 @@ const Chat = () => {
     setAccount,
     currentUsername,
     username,
+    setFriendMsg,
   ]);
 
   // setLoading(false);

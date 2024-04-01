@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState, useLayoutEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import "./friend.css";
 import { ChatAppContext } from "../../../context/ChatAppContext";
@@ -8,10 +8,10 @@ import Image from "..//..//..//utils/image";
 //! importing some useful api
 import { getContractInstance } from "..//..//../utils/apiFeature";
 
-type Friend = {
-  name: string;
-  friendAddress: string;
-};
+// interface Friend  {
+//   name: string;
+//   friendAddress: string;
+// }
 
 const Friend = () => {
   const [activeFriend, setActiveFriend] = useState<string | null>(null);
@@ -24,16 +24,12 @@ const Friend = () => {
 
   const {
     friendList,
-    setFriendList,
-    currentUsername,
+    setFriendList,  
     setCurrentUsername,
-    currentUserAddress,
     setCurrentUserAddress,
-    imageIndex,
     setImageIndex,
     scrollBack,
     friendMsg,
-    setFriendMsg,
     readMessage,
     account,
     setAccount,
@@ -65,23 +61,22 @@ const Friend = () => {
   }, [friendMsg]);
 
   const handleClickedFriend = (
-    event: React.MouseEvent<HTMLDivElement>,
-    friend: Friend,
-    index
+    friend: string,
+    index : number
   ) => {
     setImageIndex(index + 1);
-    setActiveFriend(friend.name);
-    setCurrentUsername(friend.name);
-    setCurrentUserAddress(friend.friendAddress);
+    setActiveFriend(friend[0]);
+    setCurrentUsername(friend[0]);
+    setCurrentUserAddress(friend[1]);
   };
 
   return (
     <div className="friends-wrapper">
       {friendList.map((friend, index) => (
         <div
-          className={`friend ${activeFriend === friend.name ? "active" : ""}`}
+          className={`friend ${activeFriend === friend[0] ? "active" : ""}`}
           key={index}
-          onClick={(event) => handleClickedFriend(event, friend, index)}
+          onClick={() => handleClickedFriend( friend, index)}
         >
           <div
             className="image-wrapper"
@@ -99,7 +94,7 @@ const Friend = () => {
               height={50}
             />
           </div>
-          <h1 className="friend-name">{friend.name}</h1>
+          <h1 className="friend-name">{friend[0]}</h1>
           {/* <h1 className= "friend-address">{friend.friendAddress.slice(0,25)+"...."}</h1> */}
         </div>
       ))}

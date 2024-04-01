@@ -1,36 +1,42 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Error } from "../src/components/index";
+import { ReactNode, useState, useEffect, useContext } from "react";
+import { Error as ErrorComponent } from "../src/components/index"; // Renamed Error to ErrorComponent
 import { ChatAppContext } from "../context/ChatAppContext";
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalError, setModalError] = useState(""); // New state for the error message in the modal
-  const { error, setError } = useContext(ChatAppContext);
+  const [modalError, setModalError] = useState("");
+  const context = useContext(ChatAppContext);
+
+  if (!context) {
+    throw new Error("Friend must be used within a ChatAppContextProvider");
+  }
+
+  const { error, setError } = context;
 
   useEffect(() => {
     if (error !== "") {
       document.body.style.overflow = "hidden";
-      setModalError(error); // Set the error message for the modal
+      setModalError(error);
       setModalOpen(true);
-      setError(""); // Reset the error after it's been shown
-      console.log("loda");
-    }
-    else{
+      setError("");
+    } else {
       document.body.style.overflow = "hidden";
-      console.log("choot");
     }
   }, [error, setError]);
 
   return (
     <>
       {modalOpen && (
-        <Error
+        <ErrorComponent
           error={modalError}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
         />
       )}
-
       {children}
     </>
   );

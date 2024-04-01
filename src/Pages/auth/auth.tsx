@@ -6,8 +6,13 @@ import { UserCraft } from "..//..//components/index";
 import { ChatAppContext } from "../../../context/ChatAppContext";
 
 const Auth = () => {
-  const { account, createAccount, error, setError } =
-    useContext(ChatAppContext);
+  const context = useContext(ChatAppContext);
+
+  if (!context) {
+    throw new Error("Friend must be used within a ChatAppContextProvider");
+  }
+
+  const { createAccount } = context;
   return (
     <>
       <div className="real-auth-wrapper">

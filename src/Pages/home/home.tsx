@@ -27,8 +27,6 @@ const Home = () => {
     setAccount,
     friendMsg,
     currentUserAddress,
-    currentUsername,
-    username,
   } = context;
 
   useEffect(() => {

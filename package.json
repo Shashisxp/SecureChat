@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "hardhat-vite": "^1.0.0",
     "perfect-scrollbar": "^1.5.5",
     "react": "^18.2.0",

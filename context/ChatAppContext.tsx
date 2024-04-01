@@ -1,4 +1,9 @@
-import React, { useState, useEffect, createContext, ReactNode , useRef} from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  ReactNode,
+} from "react";
 import { useNavigate } from "react-router-dom";
 
 // internal imports
@@ -18,6 +23,11 @@ interface Wallet {
   address: string;
   connected: boolean;
 }
+// interface Friend  {
+//   name: string;
+//   friendAddress: string;
+// }
+
 
 interface ChatAppContextType {
   readMessage: (friendAddress: string) => Promise<void>;
@@ -35,16 +45,16 @@ interface ChatAppContextType {
   friendMsg: string[];
   setFriendMsg: React.Dispatch<React.SetStateAction<never[]>>;
   loading: boolean;
-  userLists: string[];
+  userLists: AccountDetails[];
   error: string;
   setError: React.Dispatch<React.SetStateAction<string>>; // Add this line
   currentUsername: string;
-  setCurrentUsername : React.Dispatch<React.SetStateAction<string>>;
+  setCurrentUsername: React.Dispatch<React.SetStateAction<string>>;
   currentUserAddress: string;
   setCurrentUserAddress: React.Dispatch<React.SetStateAction<string>>;
-  imageIndex : number;
-  setImageIndex : React.Dispatch<React.SetStateAction<number>>;
-  lastMessageRef: React.MutableRefObject<null>;
+  imageIndex: number;
+  setImageIndex: React.Dispatch<React.SetStateAction<number>>;
+  lastMessageRef: React.RefObject<HTMLDivElement>;
   scrollBack: () => void;
 
   // getUSERNAME: () => Promise<void>;
@@ -64,7 +74,7 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [userLists, setUserLists] = useState([]);
   const [error, setError] = useState("");
-  const [imageIndex , setImageIndex] = useState(1);
+  const [imageIndex, setImageIndex] = useState(1);
   //Chat user data
 
   const [currentUsername, setCurrentUsername] = useState("");
@@ -117,11 +127,8 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
     fetchData();
   }, []);
 
-  
-
-  //! this shits here check if the user is registred or not if he or she is then and then only we will ask them for there names 
-  const isAccountRegistered = async (account: string) => {          
-
+  //! this shits here check if the user is registred or not if he or she is then and then only we will ask them for there names
+  const isAccountRegistered = async (account: string) => {
     const contract = await getContractInstance();
     const registered = await contract.checkUserExist(account);
     return registered;
@@ -143,7 +150,6 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
           getUSERNAME();
           // readMessage(accounts[0]);
           // readUser(accounts[0]);
-          
         }
       }
     };
@@ -163,14 +169,12 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
     };
   }, [account, setAccount]);
 
-
-  const lastMessageRef = useRef(null);
-
-  const scrollBack = () => {
+  const lastMessageRef = React.useRef<HTMLDivElement>(null);
+    const scrollBack = () => {
     if (lastMessageRef.current) {
       lastMessageRef.current.scrollIntoView({ behavior: "auto" });
     }
-  }
+  };
 
   // read message
   const readMessage = async (friendAddress: string) => {
@@ -200,14 +204,18 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
       console.log(`Transaction was successful: ${receipt.status === 1}`);
 
       window.location.href = "/home"; // Redirect to /home
-    } catch (error) {
+    } catch (error: unknown) {
       if (!window.ethereum) {
         window.location.href = "/connect"; // Redirect to /connect
         console.log("Please install MetaMask or another Ethereum wallet.");
       }
-      setError(error.reason || error.message || error.toString());
-
-      console.log({ error });
+      if (error instanceof Error) {
+        // Now TypeScript knows that `error` is an `Error` object, so you can access its properties
+        setError(error.message);
+      } else {
+        // If it's not an `Error` object, you can handle it differently or throw it again
+        throw error;
+      }
     }
   };
 
@@ -222,8 +230,14 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
         setUsername(userName);
       }
       // console.log(` hello ${userName}  how are you doing `);
-    } catch (error) {
-      setError(error.reason || error.message || error.toString());
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        // Now TypeScript knows that `error` is an `Error` object, so you can access its properties
+        setError(error.message);
+      } else {
+        // If it's not an `Error` object, you can handle it differently or throw it again
+        throw error;
+      }
     }
   };
   // add your Friends
@@ -244,15 +258,15 @@ export const ChatAppProvider = ({ children }: { children: ReactNode }) => {
       // To navigate to "/home"
       navigate("/home");
       // window.location.reload();
-    } catch (error) {
-      document.body.style.overflow = "hidden";
-      let errorMessage;
-      if (error.data) {
-        errorMessage = error.data.message;
+    } catch (error:unknown) {
+      if (error instanceof Error) {
+        // Now TypeScript knows that `error` is an `Error` object, so you can access its properties
+        setError(error.message);
+      } else {
+        // If it's not an `Error` object, you can handle it differently or throw it again
+        throw error;
       }
-      setError(error.reason || error.message || error.toString());
 
-      console.log(errorMessage);
     }
   };
 
