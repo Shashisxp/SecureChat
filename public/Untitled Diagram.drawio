@@ -1,9 +1,52 @@
-<mxfile host="app.diagrams.net" modified="2024-04-09T08:44:30.115Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" version="24.2.3" etag="CJbmrVEjmtJWecPo_RjY" type="github">
-  <diagram name="Page-1" id="gnAGdLRlg6RkgBVLrild">
+<mxfile host="app.diagrams.net" modified="2024-04-09T16:31:35.884Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" version="24.2.3" etag="unmEso_kp3hhEBCfsjkO" type="github">
+  <diagram name="Page-1" id="17XvGv0IBDt5OzlLUY-d">
     <mxGraphModel>
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="2" value="Start" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="63" width="50" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="3" value="CheckRequirements" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="10" y="84" width="156" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="4" value="DevelopSmartContract" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry y="168" width="176" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="5" value="TestSmartContract" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="14" y="252" width="148" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="6" value="DeploySmartContract" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="4" y="336" width="168" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="7" value="End" style="whiteSpace=wrap;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="68" y="420" width="41" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="8" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5040625;exitY=1;entryX=0.5013020833333334;entryY=0;" edge="1" parent="1" source="2" target="3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5013020833333334;exitY=1;entryX=0.5011541193181818;entryY=0;" edge="1" parent="1" source="3" target="4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="10" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5011541193181818;exitY=1;entryX=0.5013724662162162;entryY=0;" edge="1" parent="1" source="4" target="5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="11" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5013724662162162;exitY=1;entryX=0.5012090773809523;entryY=0;" edge="1" parent="1" source="5" target="6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" value="" style="curved=1;startArrow=none;endArrow=block;exitX=0.5012090773809523;exitY=1;entryX=0.4927591463414634;entryY=0;" edge="1" parent="1" source="6" target="7">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
